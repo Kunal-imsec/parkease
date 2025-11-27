@@ -1,0 +1,37 @@
+[ {
+  "id" : "owner-1",
+  "email" : "owner1@parkease.com",
+  "password" : "password123",
+  "name" : "Mike Johnson",
+  "phone" : "+1234567892",
+  "businessName" : "Downtown Parking Solutions",
+  "approved" : true,
+  "active" : true
+}, {
+  "id" : "owner-2",
+  "email" : "owner2@parkease.com",
+  "password" : "password123",
+  "name" : "Sarah Williams",
+  "phone" : "+1234567893",
+  "businessName" : "City Center Parking",
+  "approved" : true,
+  "active" : true
+}, {
+  "id" : "b356b991-01a7-4a59-88a4-1c8ecf9f7b4a",
+  "email" : "abhi@gmail.com",
+  "password" : "Abhi@123",
+  "name" : "Abhishek Singh",
+  "phone" : "9894036789",
+  "businessName" : "The Sheru Spaces",
+  "approved" : true,
+  "active" : true
+}, {
+  "id" : "cb9a828c-a17f-4e83-8431-a7def6e1e4d6",
+  "email" : "udit@gmail.com",
+  "password" : "$2a$10$wTdhgynZ9xsr3ZyTFAHCSuCCtAOEs1.CSDZgxWDZUxjTgkx9Xgaka",
+  "name" : "Udit Singh",
+  "phone" : "9844464644",
+  "businessName" : "Chomu Spaces",
+  "approved" : true,
+  "active" : true
+} ]

@@ -1,0 +1,28 @@
+[ {
+  "id" : "request-1",
+  "email" : "newowner@example.com",
+  "password" : "$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhWy",
+  "name" : "Robert Brown",
+  "phone" : "+1234567894",
+  "businessName" : "Queens Parking Services",
+  "requestDate" : "2025-11-25T09:00:00",
+  "status" : "PENDING"
+}, {
+  "id" : "b0699c65-9cad-4788-ac0c-327b6a45dd95",
+  "email" : "abhi@gmail.com",
+  "password" : "$2a$10$jUqCRgNuVyEHq3UzVW4idOp9dowO1YkMdeeSdImbkwYJlNiyW8q/2",
+  "name" : "Abhishek Singh",
+  "phone" : "9894036789",
+  "businessName" : "The Sheru Spaces",
+  "requestDate" : "2025-11-27T21:54:41.517510800",
+  "status" : "APPROVED"
+}, {
+  "id" : "684fc655-f180-43d8-9b3c-a8cd92975cee",
+  "email" : "udit@gmail.com",
+  "password" : "$2a$10$wTdhgynZ9xsr3ZyTFAHCSuCCtAOEs1.CSDZgxWDZUxjTgkx9Xgaka",
+  "name" : "Udit Singh",
+  "phone" : "9844464644",
+  "businessName" : "Chomu Spaces",
+  "requestDate" : "2025-11-28T01:19:36.669810300",
+  "status" : "APPROVED"
+} ]

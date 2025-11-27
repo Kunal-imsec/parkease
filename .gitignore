@@ -1,0 +1,34 @@
+# Node modules
+node_modules/
+parkease-frontend/node_modules/
+
+# Build outputs
+parkease-frontend/dist/
+parkease-frontend/build/
+parkease-backend/target/
+
+# IDE files
+.idea/
+.vscode/
+*.iml
+*.iws
+*.ipr
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Environment files
+.env
+.env.local
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Maven
+parkease-backend/.mvn/
+parkease-backend/mvnw
+parkease-backend/mvnw.cmd

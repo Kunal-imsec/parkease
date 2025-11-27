@@ -1,0 +1,25 @@
+[ {
+  "id" : "user-1",
+  "email" : "john@example.com",
+  "password" : "password123",
+  "name" : "John Doe",
+  "phone" : "+1234567890",
+  "role" : "USER",
+  "active" : true
+}, {
+  "id" : "user-2",
+  "email" : "jane@example.com",
+  "password" : "password123",
+  "name" : "Jane Smith",
+  "phone" : "+1234567891",
+  "role" : "USER",
+  "active" : true
+}, {
+  "id" : "25686301-7320-4642-be82-f479b6c08582",
+  "email" : "udit@gmail.com",
+  "password" : "$2a$10$BKEPm/jxE94S/9PwoMNH0uRd7D9MCWCMTq/vywijkwuT1PjM2H9zO",
+  "name" : "Udit singh",
+  "phone" : "6494036060",
+  "role" : "USER",
+  "active" : true
+} ]

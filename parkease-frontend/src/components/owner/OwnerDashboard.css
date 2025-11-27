@@ -1,0 +1,118 @@
+/* Owner & Admin Dashboard Styles - extends Dashboard.css */
+@import '../user/Dashboard.css';
+
+/* Stats Cards */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.stat-card {
+    background: rgba(26, 26, 26, 0.6);
+    border: 1px solid #2D2D2D;
+    border-radius: 16px;
+    padding: 1.5rem;
+    backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
+}
+
+.stat-card:hover {
+    border-color: #5E6AD2;
+    transform: translateY(-2px);
+    box-shadow: 0 10px 40px rgba(94, 106, 210, 0.15);
+}
+
+.stat-label {
+    font-size: 0.875rem;
+    color: #A0A0A0;
+    margin-bottom: 0.5rem;
+}
+
+.stat-value {
+    font-size: 2rem;
+    font-weight: 600;
+    color: #FFFFFF;
+}
+
+.stat-subtext {
+    font-size: 0.75rem;
+    color: #6B6B6B;
+    margin-top: 0.25rem;
+}
+
+/* Table Styles */
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.data-table thead tr {
+    border-bottom: 1px solid #2D2D2D;
+}
+
+.data-table th {
+    text-align: left;
+    padding: 1rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #A0A0A0;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.data-table td {
+    padding: 1rem;
+    border-bottom: 1px solid #2D2D2D;
+    color: #FFFFFF;
+}
+
+.data-table tbody tr:hover {
+    background: rgba(255, 255, 255, 0.02);
+}
+
+/* Alert/Warning */
+.alert-warning {
+    background: rgba(255, 217, 61, 0.1);
+    border: 1px solid rgba(255, 217, 61, 0.3);
+    border-radius: 12px;
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    color: #FFD93D;
+}
+
+/* Tabs */
+.tabs-container {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 2rem;
+    border-bottom: 1px solid #2D2D2D;
+    padding-bottom: 0.5rem;
+}
+
+.tab-button {
+    padding: 0.75rem 1.5rem;
+    background: transparent;
+    border: none;
+    color: #A0A0A0;
+    font-size: 0.875rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border-radius: 8px 8px 0 0;
+}
+
+.tab-button.active {
+    color: #FFFFFF;
+    background: rgba(94, 106, 210, 0.1);
+    border-bottom: 2px solid #5E6AD2;
+}
+
+.tab-button:hover:not(.active) {
+    color: #FFFFFF;
+    background: rgba(255, 255, 255, 0.05);
+}
