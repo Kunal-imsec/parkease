@@ -1,309 +1,312 @@
-# ParkEase - Urban Parking System
+# 🚗 ParkEase - Modern Urban Parking Management System
 
-A complete web application for urban parking management with role-based access control, Google Maps integration, and file-based data persistence.
+A full-stack parking management application featuring a stunning **Linear-inspired dark UI** with 3D animated cars, glassmorphism effects, and smooth scrolling. Built with React and Spring Boot.
 
-## 🎯 Features
+![ParkEase Banner](https://img.shields.io/badge/Status-Production%20Ready-success?style=for-the-badge)
+![React](https://img.shields.io/badge/React-18-blue?style=for-the-badge&logo=react)
+![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3-green?style=for-the-badge&logo=springboot)
 
-### Three User Roles
+## ✨ Features
 
-#### 👤 User
-- View available parking lots on Google Maps
-- Search parking by city or area
-- View parking lot details (price, availability, owner, slots)
-- Book parking slots
-- View booking history
+### 🎨 Beautiful UI/UX
+- **Linear-inspired Design**: Minimalist dark theme with purple accents
+- **3D Animated Landing Page**: Realistic car animations with smooth parallax scrolling
+- **Glassmorphism Effects**: Modern frosted glass UI components
+- **Responsive Design**: Works seamlessly on desktop, tablet, and mobile
+- **Smooth Animations**: Powered by Framer Motion
+
+### 👥 User Features
+- Browse available parking lots with real-time availability
+- Advanced search and filtering
+- Book parking spots with flexible hourly rates
+- View complete booking history
 - Cancel bookings
+- Interactive map integration
+- Status tracking (Confirmed, Completed, Cancelled)
 
-#### 🏢 Parking Owner
-- Register and wait for admin approval
-- Create, update, and delete parking lots
-- Set parking availability (Available/Not Available)
-- Set pricing and number of slots
-- Update location coordinates
-- View bookings for owned parking lots
+### 🏢 Owner Features
+- Add and manage multiple parking lots
+- Set custom pricing and availability
+- View all bookings for owned properties
+- Real-time revenue tracking
+- Toggle lot availability on/off
+- Edit parking lot details
 
-#### 👨‍💼 Admin
-- View all parking owners
-- Approve or reject owner registration requests
-- View all parking lots
-- Activate/deactivate parking lots
-- View all user bookings
-- Dashboard with system statistics
+### 🔐 Admin Features
+- Approve/reject owner registration requests
+- System-wide statistics dashboard
+- Manage all owners and their status
+- Monitor all parking lots
+- View all bookings across the platform
+- Comprehensive analytics
 
-## 🛠️ Technology Stack
-
-### Backend
-- **Framework**: Spring Boot 3.2.0
-- **Language**: Java 17
-- **Security**: JWT Authentication
-- **Data Storage**: JSON files (no database)
-- **Build Tool**: Maven
+## 🛠️ Tech Stack
 
 ### Frontend
-- **Framework**: React 18
-- **Build Tool**: Vite
-- **Styling**: TailwindCSS
-- **State Management**: Redux Toolkit
-- **Routing**: React Router
-- **Maps**: Google Maps JavaScript API
-- **HTTP Client**: Axios
+- **React 18** - UI library
+- **Redux Toolkit** - State management
+- **React Router v6** - Client-side routing
+- **Framer Motion** - Animation library
+- **Axios** - HTTP client
+- **Vite** - Build tool
 
-## 📁 Project Structure
+### Backend
+- **Spring Boot 3** - Java framework
+- **Spring Security** - Authentication & authorization
+- **JWT** - Token-based authentication
+- **BCrypt** - Password hashing
+- **JSON File Storage** - Lightweight data persistence
+- **Maven** - Dependency management
 
-```
-parkease/
-├── parkease-backend/          # Spring Boot Backend
-│   ├── src/main/java/com/parkease/
-│   │   ├── ParkEaseApplication.java
-│   │   ├── config/           # Security & CORS configuration
-│   │   ├── controller/       # REST controllers
-│   │   ├── service/          # Business logic
-│   │   ├── model/            # Domain models
-│   │   ├── dto/              # Data Transfer Objects
-│   │   ├── util/             # Utilities (JWT, JSON file operations)
-│   │   └── security/         # JWT authentication filter
-│   ├── src/main/resources/
-│   │   ├── application.properties
-│   │   └── data/             # JSON data files
-│   │       ├── users.json
-│   │       ├── owners.json
-│   │       ├── parkingLots.json
-│   │       ├── bookings.json
-│   │       └── ownerRequests.json
-│   └── pom.xml
-│
-└── parkease-frontend/         # React Frontend
-    ├── src/
-    │   ├── components/
-    │   │   ├── common/       # Navbar, ProtectedRoute
-    │   │   ├── auth/         # Login, Register
-    │   │   ├── user/         # User dashboard, Booking history
-    │   │   ├── owner/        # Owner dashboard
-    │   │   └── admin/        # Admin dashboard
-    │   ├── store/            # Redux store & slices
-    │   ├── services/         # API services
-    │   ├── App.jsx
-    │   ├── main.jsx
-    │   └── index.css
-    ├── package.json
-    └── vite.config.js
+### Design System
+- **Colors**: Dark (#0D0D0D), Purple accent (#5E6AD2)
+- **Typography**: Inter font family
+- **Effects**: Glassmorphism, smooth transitions, purple glows
+
+## 📋 Prerequisites
+
+Before running this project, ensure you have the following installed:
+
+- **Node.js** (v16 or higher) - [Download](https://nodejs.org/)
+- **Java JDK** (v17 or higher) - [Download](https://www.oracle.com/java/technologies/downloads/)
+- **Maven** (v3.6 or higher) - [Download](https://maven.apache.org/download.cgi)
+- **Git** - [Download](https://git-scm.com/downloads)
+
+## 🚀 Installation & Setup
+
+### 1. Clone the Repository
+
+```bash
+git clone https://github.com/kunal-imsec/parkease.git
+cd parkease
 ```
 
-## 🚀 Setup Instructions
+### 2. Backend Setup (Spring Boot)
 
-### Prerequisites
-- Java 17 or higher
-- Maven 3.6+
-- Node.js 18+ and npm
-- Google Maps API Key
+```bash
+# Navigate to backend directory
+cd parkease-backend
 
-### Backend Setup
+# Install dependencies and run
+mvn spring-boot:run
+```
 
-1. **Navigate to backend directory**
-   ```bash
-   cd parkease/parkease-backend
-   ```
+The backend will start on **http://localhost:8080**
 
-2. **Build the project**
-   ```bash
-   mvn clean install
-   ```
+**Backend Features:**
+- REST API endpoints
+- JWT authentication
+- Role-based access control (USER, OWNER, ADMIN)
+- JSON file-based data storage in `src/main/resources/data/`
 
-3. **Run the application**
-   ```bash
-   mvn spring-boot:run
-   ```
+### 3. Frontend Setup (React)
 
-   The backend will start on `http://localhost:8080`
+Open a new terminal window:
 
-### Frontend Setup
+```bash
+# Navigate to frontend directory
+cd parkease-frontend
 
-1. **Navigate to frontend directory**
-   ```bash
-   cd parkease/parkease-frontend
-   ```
+# Install dependencies
+npm install
 
-2. **Install dependencies**
-   ```bash
-   npm install
-   ```
+# Start development server
+npm run dev
+```
 
-3. **Configure Google Maps API Key**
-   
-   Open `src/components/user/UserDashboard.jsx` and replace:
-   ```javascript
-   const GOOGLE_MAPS_API_KEY = 'YOUR_GOOGLE_MAPS_API_KEY_HERE';
-   ```
-   
-   **How to get Google Maps API Key:**
-   - Go to [Google Cloud Console](https://console.cloud.google.com/)
-   - Create a new project or select existing
-   - Enable "Maps JavaScript API"
-   - Create credentials (API Key)
-   - Copy the API key
+The frontend will start on **http://localhost:5173**
 
-4. **Run the development server**
-   ```bash
-   npm run dev
-   ```
+### 4. Access the Application
 
-   The frontend will start on `http://localhost:5173`
+Open your browser and navigate to:
+- **Landing Page**: http://localhost:5173/
+- **Login**: http://localhost:5173/login
 
 ## 🔑 Demo Credentials
 
-### Admin
-- **Email**: admin@parkease.com
-- **Password**: admin123
-- **Role**: ADMIN
+### Regular User
+```
+Email: john@example.com
+Password: password123
+Role: USER
+```
 
-### Parking Owner
-- **Email**: owner1@parkease.com
-- **Password**: password123
-- **Role**: OWNER
+### Parking Lot Owner
+```
+Email: owner1@parkease.com
+Password: password123
+Role: OWNER
+```
 
-### User
-- **Email**: john@example.com
-- **Password**: password123
-- **Role**: USER
+### System Administrator
+```
+Email: admin@parkease.com
+Password: admin123
+Role: ADMIN
+```
 
-## 📡 API Endpoints
+## 📱 Application Routes
 
-### Authentication
-- `POST /api/auth/login` - Login
-- `POST /api/auth/register/user` - Register user
-- `POST /api/auth/register/owner` - Register owner (requires approval)
+| Route | Description | Access |
+|-------|-------------|--------|
+| `/` | Landing page with 3D car animations | Public |
+| `/login` | User login | Public |
+| `/register` | User registration | Public |
+| `/register/owner` | Owner registration (requires admin approval) | Public |
+| `/user/dashboard` | User dashboard - browse & book parking | User only |
+| `/user/bookings` | View booking history | User only |
+| `/owner/dashboard` | Manage parking lots & view bookings | Owner only |
+| `/admin/dashboard` | System management & analytics | Admin only |
 
-### Admin
-- `GET /api/admin/dashboard` - Dashboard statistics
-- `GET /api/admin/owner-requests/pending` - Pending owner requests
-- `POST /api/admin/owner-requests/{id}/approve` - Approve owner
-- `POST /api/admin/owner-requests/{id}/reject` - Reject owner
-- `GET /api/admin/owners` - All owners
-- `PUT /api/admin/parking-lots/{id}/toggle` - Toggle parking lot status
+## 🏗️ Project Structure
 
-### Owner
-- `GET /api/owner/parking-lots` - Owner's parking lots
-- `POST /api/owner/parking-lots` - Create parking lot
-- `PUT /api/owner/parking-lots/{id}` - Update parking lot
-- `DELETE /api/owner/parking-lots/{id}` - Delete parking lot
-- `PUT /api/owner/parking-lots/{id}/availability` - Update availability
-- `GET /api/owner/bookings` - Owner's bookings
+```
+parkease/
+├── parkease-frontend/          # React frontend
+│   ├── public/                 # Static assets (car images)
+│   ├── src/
+│   │   ├── components/         # React components
+│   │   │   ├── admin/          # Admin dashboard
+│   │   │   ├── auth/           # Login, Register
+│   │   │   ├── common/         # Navbar, ProtectedRoute
+│   │   │   ├── landing/        # Landing page with cars
+│   │   │   ├── owner/          # Owner dashboard
+│   │   │   └── user/           # User dashboard, Bookings
+│   │   ├── services/           # API service layer
+│   │   ├── store/              # Redux store & slices
+│   │   └── App.jsx             # Main app component
+│   └── package.json
+│
+└── parkease-backend/           # Spring Boot backend
+    ├── src/main/
+    │   ├── java/com/parkease/
+    │   │   ├── config/         # Security, CORS config
+    │   │   ├── controller/     # REST controllers
+    │   │   ├── dto/            # Data transfer objects
+    │   │   ├── model/          # Entity models
+    │   │   ├── security/       # JWT filters
+    │   │   ├── service/        # Business logic
+    │   │   └── util/           # Utilities (JWT, JSON)
+    │   └── resources/
+    │       ├── data/           # JSON data files
+    │       └── application.properties
+    └── pom.xml
+```
 
-### User/Public
-- `GET /api/parking/available` - Available parking lots
-- `GET /api/parking/{id}` - Parking lot details
-- `GET /api/parking/search/city/{city}` - Search by city
-- `GET /api/parking/search/area/{area}` - Search by area
+## 🎯 Key Features Explained
 
-### Bookings
-- `POST /api/bookings` - Create booking
-- `GET /api/bookings/user` - User's bookings
-- `GET /api/bookings/all` - All bookings (admin)
-- `PUT /api/bookings/{id}/cancel` - Cancel booking
+### Authentication Flow
+1. User registers (USER or OWNER role)
+2. Owner registrations require admin approval
+3. Login generates JWT token
+4. Token stored in localStorage
+5. Protected routes validate token and role
 
-## 🎨 Features Walkthrough
+### Booking Flow
+1. User browses available parking lots
+2. Selects lot and duration (hours)
+3. Confirms booking
+4. Booking status: CONFIRMED → COMPLETED or CANCELLED
+5. Owner sees booking in their dashboard
 
-### User Flow
-1. Register as a user
-2. Login with user credentials
-3. View parking lots on Google Maps
-4. Search by city/area
-5. Click on map markers to see details
-6. Book a parking slot
-7. View booking history
-8. Cancel bookings if needed
+### Owner Approval Flow
+1. User registers as owner
+2. Request stored in `ownerRequests.json`
+3. Admin reviews in admin dashboard
+4. Admin approves/rejects
+5. Approved owners can login and manage lots
 
-### Owner Flow
-1. Register as parking owner
-2. Wait for admin approval
-3. Login after approval
-4. Create parking lots with location coordinates
-5. Set pricing and availability
-6. Manage parking lots (edit/delete)
-7. View bookings for owned lots
+## 🎨 Design Highlights
 
-### Admin Flow
-1. Login with admin credentials
-2. View dashboard statistics
-3. Review pending owner requests
-4. Approve/reject owner registrations
-5. Manage all parking lots
-6. View all bookings
-7. Activate/deactivate parking lots
+- **Dark Theme**: #0D0D0D background for reduced eye strain
+- **Purple Accent**: #5E6AD2 for CTAs and highlights
+- **Glassmorphism**: `backdrop-filter: blur()` for modern cards
+- **Smooth Animations**: 0.2s-0.3s transitions throughout
+- **Inter Font**: Clean, modern typography
+- **Status Badges**: Color-coded booking statuses
 
-## 🗄️ Data Persistence
+## 🔧 Configuration
 
-All data is stored in JSON files located at `parkease-backend/src/main/resources/data/`:
+### Backend Configuration
+Edit `parkease-backend/src/main/resources/application.properties`:
 
-- **users.json** - User accounts
-- **owners.json** - Approved parking owners
-- **parkingLots.json** - Parking lot information
-- **bookings.json** - Booking records
-- **ownerRequests.json** - Pending owner registration requests
+```properties
+server.port=8080
+jwt.secret=your-secret-key-here
+jwt.expiration=86400000
+```
 
-Data persists across server restarts.
+### Frontend Configuration
+Edit `parkease-frontend/src/services/api.js` if backend URL changes:
 
-## 🔒 Security
+```javascript
+const API_BASE_URL = 'http://localhost:8080/api';
+```
 
-- JWT-based authentication
-- Role-based access control (RBAC)
-- Password encryption using BCrypt
-- Protected routes on frontend
-- CORS configuration for cross-origin requests
+## 📦 Build for Production
 
-## 🎯 Key Features Implementation
+### Frontend Build
+```bash
+cd parkease-frontend
+npm run build
+```
+Output will be in `dist/` folder.
 
-### Google Maps Integration
-- Interactive map with custom markers
-- Info windows showing parking details
-- Real-time availability display
-- Booking directly from map
-
-### File-Based Storage
-- Thread-safe JSON file operations
-- Automatic directory creation
-- Pretty-printed JSON for readability
-- No database required
-
-### Booking System
-- Real-time slot availability
-- Automatic slot count management
-- Booking confirmation
-- Cancellation with slot restoration
+### Backend Build
+```bash
+cd parkease-backend
+mvn clean package
+java -jar target/parkease-backend-0.0.1-SNAPSHOT.jar
+```
 
 ## 🐛 Troubleshooting
 
-### Backend Issues
-- **Port 8080 already in use**: Change port in `application.properties`
-- **File permission errors**: Ensure write permissions for `src/main/resources/data/`
+### Port Already in Use
+- **Frontend (5173)**: Change port in `vite.config.js`
+- **Backend (8080)**: Change in `application.properties`
 
-### Frontend Issues
-- **Google Maps not loading**: Verify API key is correct and Maps JavaScript API is enabled
-- **CORS errors**: Ensure backend is running and CORS is properly configured
-- **Module not found**: Run `npm install` again
+### CORS Issues
+Backend is configured for `http://localhost:5173`. Update `@CrossOrigin` annotations if frontend URL changes.
 
-## 📝 Notes
+### Authentication Issues
+- Clear browser localStorage
+- Check JWT token expiration
+- Verify credentials in `data/users.json`, `data/owners.json`
 
-- Default passwords in sample data are hashed with BCrypt (password: "password123")
-- Admin credentials are hardcoded in AuthService for demo purposes
-- Google Maps API key must be added for map functionality
-- Sample data includes NYC coordinates for parking lots
+## 🤝 Contributing
 
-## 🚀 Production Deployment
-
-For production deployment:
-1. Replace file-based storage with a real database
-2. Use environment variables for sensitive data
-3. Enable HTTPS
-4. Implement rate limiting
-5. Add comprehensive error handling
-6. Set up proper logging
-7. Use production-grade secret keys
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit changes (`git commit -m 'Add AmazingFeature'`)
+4. Push to branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
 
 ## 📄 License
 
-This project is created for educational purposes.
+This project is licensed under the MIT License.
+
+## 👨‍💻 Author
+
+**Kunal Agrawal**
+- GitHub: [@kunal-imsec](https://github.com/kunal-imsec)
+
+## 🙏 Acknowledgments
+
+- Design inspired by [Linear.app](https://linear.app)
+- Car animations using Framer Motion
+- UI components styled with custom CSS
+
+## 📸 Screenshots
+
+### Landing Page
+Beautiful 3D animated cars with smooth scrolling and purple glow effects.
+
+### User Dashboard
+Browse and book parking spots with real-time availability and interactive maps.
+
+### Admin Dashboard
+Comprehensive system management with statistics, owner approvals, and analytics.
 
 ---
 
-**Built with ❤️ using Spring Boot and React**
+**⭐ If you find this project useful, please consider giving it a star!**
