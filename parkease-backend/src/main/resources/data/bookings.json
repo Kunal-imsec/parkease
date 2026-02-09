@@ -140,5 +140,57 @@
   "hours" : 24,
   "totalPrice" : 360.0,
   "bookingDate" : "2025-11-28T01:26:33.194361300",
+  "status" : "COMPLETED"
+}, {
+  "id" : "dbb26cd6-033e-4920-8762-f849e3051d19",
+  "userId" : "user-1",
+  "userName" : "John Doe",
+  "userEmail" : "john@example.com",
+  "parkingLotId" : "75fa1ee6-795a-4611-ae65-6730026a57cc",
+  "parkingLotName" : "Kunal Agrawal",
+  "parkingLotAddress" : "Pradhan Building, Siddharth PG",
+  "pricePerHour" : 10.0,
+  "hours" : 2,
+  "totalPrice" : 20.0,
+  "bookingDate" : "2025-11-28T01:53:57.598655200",
+  "status" : "COMPLETED"
+}, {
+  "id" : "cfcbb740-0f82-49a7-9f7e-6b355a5f5035",
+  "userId" : "user-1",
+  "userName" : "John Doe",
+  "userEmail" : "john@example.com",
+  "parkingLotId" : "1aeda6de-3116-46ee-b22b-67861c7b4f29",
+  "parkingLotName" : "Udit Singh",
+  "parkingLotAddress" : "Kabirchaura Hospital",
+  "pricePerHour" : 15.0,
+  "hours" : 2,
+  "totalPrice" : 30.0,
+  "bookingDate" : "2025-11-28T11:55:51.208009400",
+  "status" : "CANCELLED"
+}, {
+  "id" : "d777d261-3a4a-4c64-a5d4-5caddbdb8e9a",
+  "userId" : "user-1",
+  "userName" : "John Doe",
+  "userEmail" : "john@example.com",
+  "parkingLotId" : "badde840-cc6c-45f4-be10-42645ce765d5",
+  "parkingLotName" : "singhSpaces",
+  "parkingLotAddress" : "Barsana Marriage Lawn ,Jaunpur",
+  "pricePerHour" : 10.0,
+  "hours" : 24,
+  "totalPrice" : 240.0,
+  "bookingDate" : "2025-11-28T12:04:21.137808200",
+  "status" : "COMPLETED"
+}, {
+  "id" : "555d66f6-cac6-466e-be45-c31acdd2cab9",
+  "userId" : "834eeb14-3007-44da-b99a-72c174672087",
+  "userName" : "Kartikey ",
+  "userEmail" : "kartikey@gmail.com",
+  "parkingLotId" : "75fa1ee6-795a-4611-ae65-6730026a57cc",
+  "parkingLotName" : "Kunal Agrawal",
+  "parkingLotAddress" : "Pradhan Building, Siddharth PG",
+  "pricePerHour" : 10.0,
+  "hours" : 2,
+  "totalPrice" : 20.0,
+  "bookingDate" : "2025-12-02T14:38:51.016232100",
   "status" : "CONFIRMED"
 } ]

@@ -70,7 +70,7 @@
   "longitude" : 77.4340608,
   "pricePerHour" : 10.0,
   "totalSlots" : 20,
-  "availableSlots" : 20,
+  "availableSlots" : 19,
   "availability" : "AVAILABLE",
   "active" : true
 }, {
@@ -115,7 +115,22 @@
   "longitude" : 83.00877180974277,
   "pricePerHour" : 15.0,
   "totalSlots" : 40,
-  "availableSlots" : 39,
+  "availableSlots" : 40,
+  "availability" : "AVAILABLE",
+  "active" : true
+}, {
+  "id" : "badde840-cc6c-45f4-be10-42645ce765d5",
+  "ownerId" : "f55aac58-fabb-44f6-aa55-65284de0c27e",
+  "ownerName" : "parth@gmail.com",
+  "name" : "singhSpaces",
+  "address" : "Barsana Marriage Lawn ,Jaunpur",
+  "city" : "Jaunpur",
+  "area" : "Siddikpur,jaunpur",
+  "latitude" : 25.79828358678784,
+  "longitude" : 82.69051759578778,
+  "pricePerHour" : 10.0,
+  "totalSlots" : 100,
+  "availableSlots" : 100,
   "availability" : "AVAILABLE",
   "active" : true
 } ]

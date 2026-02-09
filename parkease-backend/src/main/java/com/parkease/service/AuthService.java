@@ -1,27 +1,33 @@
 package com.parkease.service;
 
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.parkease.dto.AuthResponse;
 import com.parkease.dto.LoginRequest;
 import com.parkease.dto.RegisterRequest;
 import com.parkease.model.Owner;
 import com.parkease.model.OwnerRequest;
 import com.parkease.model.User;
-import com.parkease.util.JsonFileUtil;
+import com.parkease.repository.OwnerRepository;
+import com.parkease.repository.OwnerRequestRepository;
+import com.parkease.repository.UserRepository;
 import com.parkease.util.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
-import java.util.List;
-import java.util.UUID;
 
 @Service
 public class AuthService {
 
     @Autowired
-    private JsonFileUtil jsonFileUtil;
+    private UserRepository userRepository;
+
+    @Autowired
+    private OwnerRepository ownerRepository;
+
+    @Autowired
+    private OwnerRequestRepository ownerRequestRepository;
 
     @Autowired
     private JwtUtil jwtUtil;
@@ -49,11 +55,7 @@ public class AuthService {
     }
 
     private AuthResponse loginOwner(LoginRequest request) {
-        List<Owner> owners = jsonFileUtil.readList("owners.json", new TypeReference<List<Owner>>() {
-        });
-        Owner owner = owners.stream()
-                .filter(o -> o.getEmail().equals(request.getEmail()))
-                .findFirst()
+        Owner owner = ownerRepository.findByEmail(request.getEmail())
                 .orElseThrow(() -> new RuntimeException("Owner not found"));
 
         if (!owner.isApproved()) {
@@ -78,22 +80,8 @@ public class AuthService {
     }
 
     private AuthResponse loginUser(LoginRequest request) {
-        List<User> users = jsonFileUtil.readList("users.json", new TypeReference<List<User>>() {
-        });
-
-        System.out.println("=== LOGIN ATTEMPT ===");
-        System.out.println("Email: " + request.getEmail());
-        System.out.println("Password received: [" + request.getPassword() + "]");
-        System.out.println("Total users in DB: " + users.size());
-
-        User user = users.stream()
-                .filter(u -> u.getEmail().equals(request.getEmail()))
-                .findFirst()
+        User user = userRepository.findByEmail(request.getEmail())
                 .orElseThrow(() -> new RuntimeException("User not found"));
-
-        System.out.println("User found: " + user.getName());
-        System.out.println("User password in DB: [" + user.getPassword() + "]");
-        System.out.println("User active: " + user.isActive());
 
         if (!user.isActive()) {
             throw new RuntimeException("User account is inactive");
@@ -104,9 +92,6 @@ public class AuthService {
                 ? passwordEncoder.matches(request.getPassword(), user.getPassword())
                 : user.getPassword().equals(request.getPassword());
 
-        System.out.println("Password matches: " + passwordMatches);
-        System.out.println("Is BCrypt: " + user.getPassword().startsWith("$2a$"));
-
         if (!passwordMatches) {
             throw new RuntimeException("Invalid password");
         }
@@ -115,17 +100,13 @@ public class AuthService {
         return new AuthResponse(token, "USER", user.getId(), user.getName(), user.getEmail());
     }
 
+    @Transactional
     public String registerUser(RegisterRequest request) {
-        List<User> users = jsonFileUtil.readList("users.json", new TypeReference<List<User>>() {
-        });
-
-        boolean exists = users.stream().anyMatch(u -> u.getEmail().equals(request.getEmail()));
-        if (exists) {
+        if (userRepository.existsByEmail(request.getEmail())) {
             throw new RuntimeException("Email already registered");
         }
 
         User user = new User();
-        user.setId(UUID.randomUUID().toString());
         user.setEmail(request.getEmail());
         user.setPassword(passwordEncoder.encode(request.getPassword()));
         user.setName(request.getName());
@@ -133,34 +114,27 @@ public class AuthService {
         user.setRole("USER");
         user.setActive(true);
 
-        users.add(user);
-        jsonFileUtil.writeList("users.json", users);
+        userRepository.save(user);
 
         return "User registered successfully";
     }
 
+    @Transactional
     public String registerOwner(RegisterRequest request) {
-        List<OwnerRequest> requests = jsonFileUtil.readList("ownerRequests.json",
-                new TypeReference<List<OwnerRequest>>() {
-                });
-
-        boolean exists = requests.stream().anyMatch(r -> r.getEmail().equals(request.getEmail()));
-        if (exists) {
+        if (ownerRequestRepository.existsByEmail(request.getEmail())) {
             throw new RuntimeException("Owner request already submitted");
         }
 
         OwnerRequest ownerRequest = new OwnerRequest();
-        ownerRequest.setId(UUID.randomUUID().toString());
         ownerRequest.setEmail(request.getEmail());
         ownerRequest.setPassword(passwordEncoder.encode(request.getPassword()));
         ownerRequest.setName(request.getName());
         ownerRequest.setPhone(request.getPhone());
         ownerRequest.setBusinessName(request.getBusinessName());
-        ownerRequest.setRequestDate(LocalDateTime.now().toString());
+        ownerRequest.setRequestDate(LocalDateTime.now());
         ownerRequest.setStatus("PENDING");
 
-        requests.add(ownerRequest);
-        jsonFileUtil.writeList("ownerRequests.json", requests);
+        ownerRequestRepository.save(ownerRequest);
 
         return "Owner registration request submitted for approval";
     }

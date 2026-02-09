@@ -1,54 +1,53 @@
 package com.parkease.service;
 
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.parkease.dto.ParkingLotDTO;
 import com.parkease.model.Booking;
 import com.parkease.model.ParkingLot;
-import com.parkease.util.JsonFileUtil;
+import com.parkease.repository.BookingRepository;
+import com.parkease.repository.ParkingLotRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
 public class OwnerService {
-    
+
     @Autowired
-    private JsonFileUtil jsonFileUtil;
-    
+    private ParkingLotRepository parkingLotRepository;
+
+    @Autowired
+    private BookingRepository bookingRepository;
+
     public List<ParkingLotDTO> getOwnerParkingLots(String ownerId) {
-        List<ParkingLot> lots = jsonFileUtil.readList("parkingLots.json", new TypeReference<List<ParkingLot>>() {});
-        return lots.stream()
-                .filter(l -> l.getOwnerId().equals(ownerId))
+        return parkingLotRepository.findByOwnerId(ownerId).stream()
                 .map(ParkingLotDTO::fromModel)
                 .collect(Collectors.toList());
     }
-    
+
+    @Transactional
     public ParkingLotDTO createParkingLot(ParkingLot lot, String ownerId, String ownerName) {
-        List<ParkingLot> lots = jsonFileUtil.readList("parkingLots.json", new TypeReference<List<ParkingLot>>() {});
-        
-        lot.setId(UUID.randomUUID().toString());
         lot.setOwnerId(ownerId);
         lot.setOwnerName(ownerName);
         lot.setAvailableSlots(lot.getTotalSlots());
         lot.setActive(true);
-        
-        lots.add(lot);
-        jsonFileUtil.writeList("parkingLots.json", lots);
-        
+
+        lot = parkingLotRepository.save(lot);
+
         return ParkingLotDTO.fromModel(lot);
     }
-    
+
+    @Transactional
     public ParkingLotDTO updateParkingLot(String lotId, ParkingLot updatedLot, String ownerId) {
-        List<ParkingLot> lots = jsonFileUtil.readList("parkingLots.json", new TypeReference<List<ParkingLot>>() {});
-        
-        ParkingLot lot = lots.stream()
-                .filter(l -> l.getId().equals(lotId) && l.getOwnerId().equals(ownerId))
-                .findFirst()
-                .orElseThrow(() -> new RuntimeException("Parking lot not found or unauthorized"));
-        
+        ParkingLot lot = parkingLotRepository.findById(lotId)
+                .orElseThrow(() -> new RuntimeException("Parking lot not found"));
+
+        if (!lot.getOwnerId().equals(ownerId)) {
+            throw new RuntimeException("Unauthorized");
+        }
+
         lot.setName(updatedLot.getName());
         lot.setAddress(updatedLot.getAddress());
         lot.setCity(updatedLot.getCity());
@@ -58,49 +57,48 @@ public class OwnerService {
         lot.setPricePerHour(updatedLot.getPricePerHour());
         lot.setTotalSlots(updatedLot.getTotalSlots());
         lot.setAvailability(updatedLot.getAvailability());
-        
-        jsonFileUtil.writeList("parkingLots.json", lots);
-        
+
+        lot = parkingLotRepository.save(lot);
+
         return ParkingLotDTO.fromModel(lot);
     }
-    
+
+    @Transactional
     public String deleteParkingLot(String lotId, String ownerId) {
-        List<ParkingLot> lots = jsonFileUtil.readList("parkingLots.json", new TypeReference<List<ParkingLot>>() {});
-        
-        boolean removed = lots.removeIf(l -> l.getId().equals(lotId) && l.getOwnerId().equals(ownerId));
-        
-        if (!removed) {
-            throw new RuntimeException("Parking lot not found or unauthorized");
+        ParkingLot lot = parkingLotRepository.findById(lotId)
+                .orElseThrow(() -> new RuntimeException("Parking lot not found"));
+
+        if (!lot.getOwnerId().equals(ownerId)) {
+            throw new RuntimeException("Unauthorized");
         }
-        
-        jsonFileUtil.writeList("parkingLots.json", lots);
-        
+
+        parkingLotRepository.delete(lot);
+
         return "Parking lot deleted successfully";
     }
-    
+
+    @Transactional
     public String updateAvailability(String lotId, String availability, String ownerId) {
-        List<ParkingLot> lots = jsonFileUtil.readList("parkingLots.json", new TypeReference<List<ParkingLot>>() {});
-        
-        ParkingLot lot = lots.stream()
-                .filter(l -> l.getId().equals(lotId) && l.getOwnerId().equals(ownerId))
-                .findFirst()
-                .orElseThrow(() -> new RuntimeException("Parking lot not found or unauthorized"));
-        
+        ParkingLot lot = parkingLotRepository.findById(lotId)
+                .orElseThrow(() -> new RuntimeException("Parking lot not found"));
+
+        if (!lot.getOwnerId().equals(ownerId)) {
+            throw new RuntimeException("Unauthorized");
+        }
+
         lot.setAvailability(availability);
-        jsonFileUtil.writeList("parkingLots.json", lots);
-        
+        parkingLotRepository.save(lot);
+
         return "Availability updated successfully";
     }
-    
+
     public List<Booking> getOwnerBookings(String ownerId) {
-        List<ParkingLot> lots = jsonFileUtil.readList("parkingLots.json", new TypeReference<List<ParkingLot>>() {});
+        List<ParkingLot> lots = parkingLotRepository.findByOwnerId(ownerId);
         List<String> lotIds = lots.stream()
-                .filter(l -> l.getOwnerId().equals(ownerId))
                 .map(ParkingLot::getId)
                 .collect(Collectors.toList());
-        
-        List<Booking> bookings = jsonFileUtil.readList("bookings.json", new TypeReference<List<Booking>>() {});
-        return bookings.stream()
+
+        return bookingRepository.findAll().stream()
                 .filter(b -> lotIds.contains(b.getParkingLotId()))
                 .collect(Collectors.toList());
     }

@@ -22,4 +22,12 @@
   "phone" : "6494036060",
   "role" : "USER",
   "active" : true
+}, {
+  "id" : "834eeb14-3007-44da-b99a-72c174672087",
+  "email" : "kartikey@gmail.com",
+  "password" : "$2a$10$8Bac09exC8kIdFvLywEEcuW1GNxCpWzTWuRADOab5XYSNCjRjMXu.",
+  "name" : "Kartikey ",
+  "phone" : "9875648489",
+  "role" : "USER",
+  "active" : true
 } ]

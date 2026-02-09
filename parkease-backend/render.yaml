@@ -1,0 +1,23 @@
+services:
+  - type: web
+    name: parkease-backend
+    runtime: java
+    buildCommand: chmod +x build.sh && ./build.sh
+    startCommand: chmod +x start.sh && ./start.sh
+    envVars:
+      - key: SPRING_PROFILES_ACTIVE
+        value: prod
+      - key: DATABASE_URL
+        sync: false
+      - key: DATABASE_USERNAME
+        sync: false
+      - key: DATABASE_PASSWORD
+        sync: false
+      - key: JWT_SECRET
+        sync: false
+      - key: CORS_ORIGINS
+        sync: false
+      - key: JAVA_TOOL_OPTIONS
+        value: -Xmx512m
+    healthCheckPath: /api/auth/health
+    autoDeploy: true

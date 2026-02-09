@@ -1,47 +1,46 @@
 package com.parkease.service;
 
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.parkease.dto.BookingDTO;
 import com.parkease.model.Booking;
 import com.parkease.model.ParkingLot;
 import com.parkease.model.User;
-import com.parkease.util.JsonFileUtil;
+import com.parkease.repository.BookingRepository;
+import com.parkease.repository.ParkingLotRepository;
+import com.parkease.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
 public class BookingService {
 
     @Autowired
-    private JsonFileUtil jsonFileUtil;
+    private BookingRepository bookingRepository;
 
+    @Autowired
+    private ParkingLotRepository parkingLotRepository;
+
+    @Autowired
+    private UserRepository userRepository;
+
+    @Transactional
     public BookingDTO createBooking(String userId, String parkingLotId, int hours) {
-        // Check if user has any active bookings
-        List<Booking> existingBookings = jsonFileUtil.readList("bookings.json", new TypeReference<List<Booking>>() {
-        });
-
         // Update expired bookings to COMPLETED
-        updateExpiredBookings(existingBookings);
+        updateExpiredBookings();
 
         // Check for active bookings for this user
-        boolean hasActiveBooking = existingBookings.stream()
-                .anyMatch(b -> b.getUserId().equals(userId) && "CONFIRMED".equals(b.getStatus()));
+        boolean hasActiveBooking = bookingRepository.existsByUserIdAndStatus(userId, "CONFIRMED");
 
         if (hasActiveBooking) {
             throw new RuntimeException(
                     "You already have an active booking. Please cancel or wait for it to complete before making a new booking.");
         }
 
-        List<ParkingLot> lots = jsonFileUtil.readList("parkingLots.json", new TypeReference<List<ParkingLot>>() {
-        });
-        ParkingLot lot = lots.stream()
-                .filter(l -> l.getId().equals(parkingLotId))
-                .findFirst()
+        ParkingLot lot = parkingLotRepository.findById(parkingLotId)
                 .orElseThrow(() -> new RuntimeException("Parking lot not found"));
 
         if (lot.getAvailableSlots() <= 0) {
@@ -52,133 +51,106 @@ public class BookingService {
             throw new RuntimeException("Parking lot is not available");
         }
 
-        List<User> users = jsonFileUtil.readList("users.json", new TypeReference<List<User>>() {
-        });
-        User user = users.stream()
-                .filter(u -> u.getId().equals(userId))
-                .findFirst()
+        User user = userRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
         // Create booking
         Booking booking = new Booking();
-        booking.setId(UUID.randomUUID().toString());
         booking.setUserId(userId);
         booking.setUserName(user.getName());
         booking.setUserEmail(user.getEmail());
         booking.setParkingLotId(parkingLotId);
         booking.setParkingLotName(lot.getName());
         booking.setParkingLotAddress(lot.getAddress());
+        booking.setLatitude(lot.getLatitude());
+        booking.setLongitude(lot.getLongitude());
         booking.setPricePerHour(lot.getPricePerHour());
         booking.setHours(hours);
         booking.setTotalPrice(lot.getPricePerHour() * hours);
-        booking.setBookingDate(LocalDateTime.now().toString());
+        booking.setBookingDate(LocalDateTime.now());
         booking.setStatus("CONFIRMED");
 
         // Update available slots
         lot.setAvailableSlots(lot.getAvailableSlots() - 1);
-        jsonFileUtil.writeList("parkingLots.json", lots);
+        parkingLotRepository.save(lot);
 
         // Save booking
-        existingBookings.add(booking);
-        jsonFileUtil.writeList("bookings.json", existingBookings);
+        booking = bookingRepository.save(booking);
 
         return BookingDTO.fromModel(booking);
     }
 
-    private void updateExpiredBookings(List<Booking> bookings) {
+    private void updateExpiredBookings() {
         LocalDateTime now = LocalDateTime.now();
-        boolean updated = false;
+        List<Booking> confirmedBookings = bookingRepository.findByStatus("CONFIRMED");
 
-        for (Booking booking : bookings) {
-            if ("CONFIRMED".equals(booking.getStatus())) {
-                try {
-                    LocalDateTime bookingTime = LocalDateTime.parse(booking.getBookingDate());
-                    LocalDateTime expiryTime = bookingTime.plusHours(booking.getHours());
+        for (Booking booking : confirmedBookings) {
+            LocalDateTime bookingTime = booking.getBookingDate();
+            LocalDateTime expiryTime = bookingTime.plusHours(booking.getHours());
 
-                    if (now.isAfter(expiryTime)) {
-                        booking.setStatus("COMPLETED");
-                        updated = true;
+            if (now.isAfter(expiryTime)) {
+                booking.setStatus("COMPLETED");
+                bookingRepository.save(booking);
 
-                        // Restore the parking slot
-                        List<ParkingLot> lots = jsonFileUtil.readList("parkingLots.json",
-                                new TypeReference<List<ParkingLot>>() {
-                                });
-                        lots.stream()
-                                .filter(l -> l.getId().equals(booking.getParkingLotId()))
-                                .findFirst()
-                                .ifPresent(lot -> {
-                                    lot.setAvailableSlots(lot.getAvailableSlots() + 1);
-                                });
-                        jsonFileUtil.writeList("parkingLots.json", lots);
-                    }
-                } catch (Exception e) {
-                    // If parsing fails, skip this booking
-                    continue;
-                }
+                // Free up the slot
+                parkingLotRepository.findById(booking.getParkingLotId())
+                        .ifPresent(lot -> {
+                            lot.setAvailableSlots(lot.getAvailableSlots() + 1);
+                            parkingLotRepository.save(lot);
+                        });
             }
         }
-
-        if (updated) {
-            jsonFileUtil.writeList("bookings.json", bookings);
-        }
     }
 
+    @Transactional
     public List<BookingDTO> getUserBookings(String userId) {
-        List<Booking> bookings = jsonFileUtil.readList("bookings.json", new TypeReference<List<Booking>>() {
-        });
-
         // Update expired bookings before returning
-        updateExpiredBookings(bookings);
+        updateExpiredBookings();
 
-        // Re-read after update
-        bookings = jsonFileUtil.readList("bookings.json", new TypeReference<List<Booking>>() {
-        });
-
-        return bookings.stream()
-                .filter(b -> b.getUserId().equals(userId))
+        return bookingRepository.findByUserId(userId).stream()
                 .map(BookingDTO::fromModel)
                 .collect(Collectors.toList());
     }
 
+    @Transactional
     public List<BookingDTO> getAllBookings() {
-        List<Booking> bookings = jsonFileUtil.readList("bookings.json", new TypeReference<List<Booking>>() {
-        });
-
         // Update expired bookings before returning
-        updateExpiredBookings(bookings);
+        updateExpiredBookings();
 
-        // Re-read after update
-        bookings = jsonFileUtil.readList("bookings.json", new TypeReference<List<Booking>>() {
-        });
-
-        return bookings.stream()
+        return bookingRepository.findAll().stream()
                 .map(BookingDTO::fromModel)
                 .collect(Collectors.toList());
     }
 
+    @Transactional
     public String cancelBooking(String bookingId, String userId) {
-        List<Booking> bookings = jsonFileUtil.readList("bookings.json", new TypeReference<List<Booking>>() {
-        });
-        Booking booking = bookings.stream()
-                .filter(b -> b.getId().equals(bookingId) && b.getUserId().equals(userId))
-                .findFirst()
-                .orElseThrow(() -> new RuntimeException("Booking not found or unauthorized"));
+        Booking booking = bookingRepository.findById(bookingId)
+                .orElseThrow(() -> new RuntimeException("Booking not found"));
+
+        if (!booking.getUserId().equals(userId)) {
+            throw new RuntimeException("Booking not found or unauthorized");
+        }
+
+        if (!"CONFIRMED".equals(booking.getStatus())) {
+            throw new RuntimeException("Only confirmed bookings can be cancelled");
+        }
 
         booking.setStatus("CANCELLED");
+        bookingRepository.save(booking);
 
         // Restore available slot
-        List<ParkingLot> lots = jsonFileUtil.readList("parkingLots.json", new TypeReference<List<ParkingLot>>() {
-        });
-        lots.stream()
-                .filter(l -> l.getId().equals(booking.getParkingLotId()))
-                .findFirst()
+        parkingLotRepository.findById(booking.getParkingLotId())
                 .ifPresent(lot -> {
                     lot.setAvailableSlots(lot.getAvailableSlots() + 1);
+                    parkingLotRepository.save(lot);
                 });
 
-        jsonFileUtil.writeList("bookings.json", bookings);
-        jsonFileUtil.writeList("parkingLots.json", lots);
-
         return "Booking cancelled successfully";
+    }
+
+    public List<BookingDTO> getParkingLotBookings(String parkingLotId) {
+        return bookingRepository.findByParkingLotId(parkingLotId).stream()
+                .map(BookingDTO::fromModel)
+                .collect(Collectors.toList());
     }
 }

@@ -25,4 +25,13 @@
   "businessName" : "Chomu Spaces",
   "requestDate" : "2025-11-28T01:19:36.669810300",
   "status" : "APPROVED"
+}, {
+  "id" : "fb5ad189-d65a-4301-a3b2-ca5fc6e0d408",
+  "email" : "parth@gmail.com",
+  "password" : "$2a$10$HHokaSt.GeOK2mqp6FQre.Q58oH289CDLr7efSaP4EbDMr7Kqa0jm",
+  "name" : "Parth Singh",
+  "phone" : "1234668722",
+  "businessName" : "SINGH SPACES",
+  "requestDate" : "2025-11-28T11:57:44.162041",
+  "status" : "APPROVED"
 } ]
