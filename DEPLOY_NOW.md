@@ -10,12 +10,13 @@ Copy these **EXACT** values into Render when creating your web service:
 
 | Variable Name | Value |
 |---------------|-------|
-| **DATABASE_URL** | `postgresql://postgres.bxidlvpleddpwflfcqpw:6x#&3mUTPyQ#+/m@aws-1-ap-southeast-1.pooler.supabase.com:6543/postgres` |
+| **DATABASE_URL** | `jdbc:postgresql://postgres.bxidlvpleddpwflfcqpw:6x#&3mUTPyQ#+/m@aws-1-ap-southeast-1.pooler.supabase.com:6543/postgres` |
 | **JWT_SECRET** | `T8mGhLgVmRNXPHiSKybq2ERi4tEahFV9bMLUjO/6UXEzQKJlhWYU9RGQDNItD/Pa` |
 | **CORS_ORIGINS** | `http://localhost:5173,https://parkease-frontend.vercel.app` |
 | **SPRING_PROFILES_ACTIVE** | `prod` |
 
 > [!IMPORTANT]
+> **Critical:** The DATABASE_URL MUST start with `jdbc:postgresql://` (not just `postgresql://`)  
 > **Database:** Using Supabase PostgreSQL (Free Forever!)  
 > **Connection:** Transaction Pooler (Port 6543) - Optimized for Render  
 > Update `CORS_ORIGINS` with your actual frontend URL once deployed!
@@ -71,7 +72,10 @@ git push origin main
 
    **Variable 1: DATABASE_URL**
    - Key: `DATABASE_URL`
-   - Value: `postgresql://postgres.bxidlvpleddpwflfcqpw:6x#&3mUTPyQ#+/m@aws-1-ap-southeast-1.pooler.supabase.com:6543/postgres`
+   - Value: `jdbc:postgresql://postgres.bxidlvpleddpwflfcqpw:6x#&3mUTPyQ#+/m@aws-1-ap-southeast-1.pooler.supabase.com:6543/postgres`
+   
+   > [!IMPORTANT]
+   > **Must start with `jdbc:postgresql://`** (not just `postgresql://`)!
 
    **Variable 2: JWT_SECRET**
    - Key: `JWT_SECRET`
