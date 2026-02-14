@@ -1,13 +1,19 @@
 package com.parkease.config;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 
+import java.util.Arrays;
+
 @Configuration
 public class CorsConfig {
+
+    @Value("${cors.allowed.origins}")
+    private String allowedOrigins;
 
     @Bean
     public CorsFilter corsFilter() {
@@ -15,8 +21,12 @@ public class CorsConfig {
         CorsConfiguration config = new CorsConfiguration();
 
         config.setAllowCredentials(true);
-        config.addAllowedOrigin("http://localhost:5173");
-        config.addAllowedOrigin("http://localhost:3000");
+
+        // Read allowed origins from environment variable
+        Arrays.stream(allowedOrigins.split(","))
+                .map(String::trim)
+                .forEach(config::addAllowedOrigin);
+
         config.addAllowedHeader("*");
         config.addAllowedMethod("*");
 
