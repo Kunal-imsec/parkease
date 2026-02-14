@@ -38,7 +38,7 @@ const BookingHistory = () => {
     };
 
     const openInMaps = (booking) => {
-        const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${booking.parkingLotAddress}`;
+        const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${booking.latitude},${booking.longitude}`;
         window.open(mapsUrl, '_blank');
     };
 

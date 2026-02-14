@@ -49,15 +49,7 @@ const Login = () => {
         }
     };
 
-    const fillDemo = (role) => {
-        if (role === 'USER') {
-            setFormData({ email: 'john@example.com', password: 'password123', role: 'USER' });
-        } else if (role === 'OWNER') {
-            setFormData({ email: 'owner1@parkease.com', password: 'password123', role: 'OWNER' });
-        } else if (role === 'ADMIN') {
-            setFormData({ email: 'admin@parkease.com', password: 'admin123', role: 'ADMIN' });
-        }
-    };
+
 
     return (
         <div className="auth-page">
@@ -126,24 +118,7 @@ const Login = () => {
                         </button>
                     </form>
 
-                    <div className="auth-divider">
-                        <span>Demo Credentials</span>
-                    </div>
 
-                    <div className="demo-buttons">
-                        <button onClick={() => fillDemo('USER')} className="demo-button">
-                            <span className="demo-role">User</span>
-                            <span className="demo-email">john@example.com</span>
-                        </button>
-                        <button onClick={() => fillDemo('OWNER')} className="demo-button">
-                            <span className="demo-role">Owner</span>
-                            <span className="demo-email">owner1@parkease.com</span>
-                        </button>
-                        <button onClick={() => fillDemo('ADMIN')} className="demo-button">
-                            <span className="demo-role">Admin</span>
-                            <span className="demo-email">admin@parkease.com</span>
-                        </button>
-                    </div>
 
                     <div className="auth-footer">
                         <p>

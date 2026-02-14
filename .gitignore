@@ -22,6 +22,10 @@ Thumbs.db
 .env
 .env.local
 
+# Firebase credentials
+parkease-backend/src/main/resources/firebase-service-account.json
+**/firebase-service-account.json
+
 # Logs
 *.log
 npm-debug.log*
