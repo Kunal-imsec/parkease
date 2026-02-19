@@ -1,82 +1,125 @@
-/* Linear-Inspired Navbar */
-
+/* =========================================
+   NEO-TOKYO NAVBAR
+   ========================================= */
 .linear-navbar {
     position: sticky;
     top: 0;
-    z-index: 100;
-    background: rgba(13, 13, 13, 0.8);
+    z-index: 1000;
+    background: rgba(10, 10, 15, 0.8);
     backdrop-filter: blur(20px);
-    border-bottom: 1px solid #2D2D2D;
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(0, 245, 255, 0.15);
+    box-shadow: 0 0 30px rgba(0, 245, 255, 0.06);
 }
 
 .navbar-container {
-    max-width: 1400px;
+    max-width: 1280px;
     margin: 0 auto;
-    padding: 1rem 2rem;
+    padding: 0 2rem;
+    height: 64px;
     display: flex;
     align-items: center;
     justify-content: space-between;
 }
 
+/* BRAND */
 .navbar-brand {
     display: flex;
     align-items: center;
-    gap: 0.75rem;
-    font-size: 1.25rem;
-    font-weight: 600;
-    color: #FFFFFF;
+    gap: 0.6rem;
+    font-family: 'Syne', sans-serif;
+    font-size: 1.35rem;
+    font-weight: 800;
+    letter-spacing: 0.03em;
     text-decoration: none;
-    transition: color 0.2s ease;
+    background: linear-gradient(90deg, #00F5FF, #FF00E5);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    transition: filter 0.3s ease;
+    position: relative;
 }
 
 .navbar-brand:hover {
-    color: #5E6AD2;
+    filter: brightness(1.3) drop-shadow(0 0 8px rgba(0, 245, 255, 0.8));
+}
+
+/* Brand glitch layer */
+.navbar-brand::after {
+    content: 'ParkEase';
+    position: absolute;
+    left: 0;
+    top: 0;
+    background: linear-gradient(90deg, #FF00E5, #00F5FF);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    opacity: 0;
+    transition: opacity 0.1s;
+}
+
+.navbar-brand:hover::after {
+    opacity: 0;
+    animation: glitch 0.4s steps(1) forwards;
 }
 
 .brand-icon {
-    width: 24px;
-    height: 24px;
+    width: 22px;
+    height: 22px;
+    color: #00F5FF;
+    filter: drop-shadow(0 0 4px rgba(0, 245, 255, 0.8));
 }
 
+/* MENU */
 .navbar-menu {
     display: flex;
     align-items: center;
-    gap: 1.5rem;
+    gap: 1.25rem;
 }
 
 .navbar-user {
-    font-size: 0.875rem;
-    font-weight: 500;
-    color: #FFFFFF;
+    font-family: 'Syne', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--nt-text, #E0E0FF);
 }
 
 .navbar-role {
-    font-size: 0.75rem;
-    color: #A0A0A0;
-    padding: 0.25rem 0.75rem;
-    background: rgba(94, 106, 210, 0.1);
-    border: 1px solid rgba(94, 106, 210, 0.3);
-    border-radius: 12px;
+    font-family: 'Syne', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 0.2rem 0.75rem;
+    border-radius: 20px;
+    background: linear-gradient(135deg, rgba(0, 245, 255, 0.15), rgba(138, 43, 226, 0.15));
+    border: 1px solid rgba(0, 245, 255, 0.3);
+    color: #00F5FF;
 }
 
+/* LOGOUT BUTTON */
 .navbar-logout {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
-    padding: 0.5rem 1rem;
-    background: transparent;
-    border: 1px solid #2D2D2D;
+    gap: 0.45rem;
+    padding: 0.45rem 1.1rem;
     border-radius: 8px;
-    color: #A0A0A0;
-    font-size: 0.875rem;
+    font-family: 'Syne', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+    color: #00F5FF;
+    background: transparent;
+    border: 1px solid rgba(0, 245, 255, 0.3);
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition: all 0.25s ease;
 }
 
 .navbar-logout:hover {
-    border-color: #5E6AD2;
-    color: #FFFFFF;
-    background: rgba(94, 106, 210, 0.1);
+    background: rgba(0, 245, 255, 0.1);
+    border-color: #00F5FF;
+    box-shadow: 0 0 16px rgba(0, 245, 255, 0.3);
+    transform: translateY(-1px);
 }
 
 .logout-icon {
@@ -84,12 +127,18 @@
     height: 16px;
 }
 
+/* RESPONSIVE */
 @media (max-width: 640px) {
     .navbar-container {
-        padding: 1rem;
+        padding: 0 1rem;
     }
 
     .navbar-user {
         display: none;
+    }
+
+    .navbar-role {
+        font-size: 0.65rem;
+        padding: 0.15rem 0.5rem;
     }
 }

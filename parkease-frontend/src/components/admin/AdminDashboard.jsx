@@ -140,19 +140,19 @@ const AdminDashboard = () => {
                     <div>
                         <h2 className="section-title">System Overview</h2>
                         <div className="lot-card">
-                            <p style={{ color: '#A0A0A0', marginBottom: '1.5rem' }}>
+                            <p style={{ color: 'rgba(200,200,255,0.5)', marginBottom: '1.5rem' }}>
                                 Welcome to the ParkEase Admin Dashboard. Here you can manage all aspects of the parking system.
                             </p>
                             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem' }}>
-                                <div style={{ background: 'rgba(94, 106, 210, 0.1)', padding: '1.5rem', borderRadius: '12px', border: '1px solid rgba(94, 106, 210, 0.3)' }}>
-                                    <div style={{ fontSize: '0.875rem', color: '#A0A0A0', marginBottom: '0.5rem' }}>Total Revenue</div>
-                                    <div style={{ fontSize: '2rem', fontWeight: 600, color: '#5E6AD2' }}>
+                                <div className="overview-box-cyan">
+                                    <div className="overview-label">Total Revenue</div>
+                                    <div className="overview-value-cyan">
                                         ${bookings.reduce((sum, b) => sum + b.totalPrice, 0).toFixed(2)}
                                     </div>
                                 </div>
-                                <div style={{ background: 'rgba(81, 207, 102, 0.1)', padding: '1.5rem', borderRadius: '12px', border: '1px solid rgba(81, 207, 102, 0.3)' }}>
-                                    <div style={{ fontSize: '0.875rem', color: '#A0A0A0', marginBottom: '0.5rem' }}>Average Price/Hour</div>
-                                    <div style={{ fontSize: '2rem', fontWeight: 600, color: '#51CF66' }}>
+                                <div className="overview-box-green">
+                                    <div className="overview-label">Average Price/Hour</div>
+                                    <div className="overview-value-green">
                                         ${parkingLots.length > 0 ? (parkingLots.reduce((sum, l) => sum + l.pricePerHour, 0) / parkingLots.length).toFixed(2) : '0.00'}
                                     </div>
                                 </div>
@@ -313,7 +313,7 @@ const AdminDashboard = () => {
                                                 <td>${booking.totalPrice.toFixed(2)}</td>
                                                 <td>
                                                     <span className={`booking-status ${booking.status === 'CONFIRMED' ? 'status-confirmed' :
-                                                            booking.status === 'COMPLETED' ? 'status-completed' : 'status-cancelled'
+                                                        booking.status === 'COMPLETED' ? 'status-completed' : 'status-cancelled'
                                                         }`}>
                                                         {booking.status}
                                                     </span>

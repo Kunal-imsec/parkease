@@ -122,7 +122,7 @@ const OwnerDashboard = () => {
                     </div>
                     <div className="stat-card">
                         <div className="stat-label">Total Revenue</div>
-                        <div className="stat-value" style={{ color: '#5E6AD2' }}>${totalRevenue.toFixed(2)}</div>
+                        <div className="stat-value">${totalRevenue.toFixed(2)}</div>
                     </div>
                 </div>
 
@@ -220,7 +220,7 @@ const OwnerDashboard = () => {
                                             <td>${booking.totalPrice.toFixed(2)}</td>
                                             <td>
                                                 <span className={`booking-status ${booking.status === 'CONFIRMED' ? 'status-confirmed' :
-                                                        booking.status === 'COMPLETED' ? 'status-completed' : 'status-cancelled'
+                                                    booking.status === 'COMPLETED' ? 'status-completed' : 'status-cancelled'
                                                     }`}>
                                                     {booking.status}
                                                 </span>

@@ -1,118 +1,258 @@
-/* Owner & Admin Dashboard Styles - extends Dashboard.css */
-@import '../user/Dashboard.css';
+/* =========================================
+   NEO-TOKYO OWNER & ADMIN DASHBOARD
+   ========================================= */
 
-/* Stats Cards */
+/* Inherits page layout from Dashboard.css via shared class names */
+/* This file extends with Owner/Admin-specific components */
+
+/* =========================================
+   STATS GRID
+   ========================================= */
 .stats-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 1.5rem;
-    margin-bottom: 2rem;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 1.25rem;
+    margin-bottom: 2.5rem;
 }
 
 .stat-card {
-    background: rgba(26, 26, 26, 0.6);
-    border: 1px solid #2D2D2D;
-    border-radius: 16px;
-    padding: 1.5rem;
-    backdrop-filter: blur(10px);
+    background: rgba(255, 255, 255, 0.04);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(0, 245, 255, 0.14);
+    border-radius: 14px;
+    padding: 1.5rem 1.75rem;
     transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.stat-card::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, #00F5FF, #8A2BE2);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s ease;
 }
 
 .stat-card:hover {
-    border-color: #5E6AD2;
+    border-color: rgba(0, 245, 255, 0.3);
+    box-shadow: 0 0 24px rgba(0, 245, 255, 0.08);
     transform: translateY(-2px);
-    box-shadow: 0 10px 40px rgba(94, 106, 210, 0.15);
+}
+
+.stat-card:hover::after {
+    transform: scaleX(1);
 }
 
 .stat-label {
-    font-size: 0.875rem;
-    color: #A0A0A0;
-    margin-bottom: 0.5rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: rgba(200, 200, 255, 0.45);
+    margin-bottom: 0.6rem;
 }
 
 .stat-value {
     font-size: 2rem;
-    font-weight: 600;
-    color: #FFFFFF;
+    font-weight: 800;
+    background: linear-gradient(135deg, #00F5FF, #8A2BE2);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 1;
+    margin-bottom: 0.3rem;
 }
 
 .stat-subtext {
-    font-size: 0.75rem;
-    color: #6B6B6B;
-    margin-top: 0.25rem;
+    font-size: 0.78rem;
+    color: rgba(200, 200, 255, 0.35);
 }
 
-/* Table Styles */
-.data-table {
-    width: 100%;
-    border-collapse: collapse;
-}
-
-.data-table thead tr {
-    border-bottom: 1px solid #2D2D2D;
-}
-
-.data-table th {
-    text-align: left;
-    padding: 1rem;
-    font-size: 0.875rem;
-    font-weight: 600;
-    color: #A0A0A0;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-}
-
-.data-table td {
-    padding: 1rem;
-    border-bottom: 1px solid #2D2D2D;
-    color: #FFFFFF;
-}
-
-.data-table tbody tr:hover {
-    background: rgba(255, 255, 255, 0.02);
-}
-
-/* Alert/Warning */
+/* =========================================
+   ALERT / WARNING BANNER
+   ========================================= */
 .alert-warning {
-    background: rgba(255, 217, 61, 0.1);
-    border: 1px solid rgba(255, 217, 61, 0.3);
-    border-radius: 12px;
-    padding: 1rem;
-    margin-bottom: 1.5rem;
     display: flex;
     align-items: center;
     gap: 0.75rem;
-    color: #FFD93D;
+    padding: 1rem 1.25rem;
+    border-radius: 10px;
+    background: rgba(255, 184, 0, 0.08);
+    border: 1px solid rgba(255, 184, 0, 0.3);
+    color: #FFB800;
+    font-size: 0.875rem;
+    font-weight: 600;
+    margin-bottom: 1.75rem;
 }
 
-/* Tabs */
+.alert-warning .icon {
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+}
+
+/* =========================================
+   TABS
+   ========================================= */
 .tabs-container {
     display: flex;
-    gap: 0.5rem;
+    gap: 0;
     margin-bottom: 2rem;
-    border-bottom: 1px solid #2D2D2D;
-    padding-bottom: 0.5rem;
+    border-bottom: 1px solid rgba(0, 245, 255, 0.12);
+    overflow-x: auto;
+    scrollbar-width: none;
+}
+
+.tabs-container::-webkit-scrollbar {
+    display: none;
 }
 
 .tab-button {
     padding: 0.75rem 1.5rem;
+    font-family: 'Syne', sans-serif;
+    font-size: 0.875rem;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+    color: rgba(200, 200, 255, 0.45);
     background: transparent;
     border: none;
-    color: #A0A0A0;
-    font-size: 0.875rem;
-    font-weight: 500;
     cursor: pointer;
-    transition: all 0.2s ease;
-    border-radius: 8px 8px 0 0;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -1px;
+    transition: all 0.25s ease;
+    white-space: nowrap;
+}
+
+.tab-button:hover {
+    color: rgba(0, 245, 255, 0.7);
 }
 
 .tab-button.active {
-    color: #FFFFFF;
-    background: rgba(94, 106, 210, 0.1);
-    border-bottom: 2px solid #5E6AD2;
+    color: #00F5FF;
+    border-bottom-color: #00F5FF;
+    text-shadow: 0 0 12px rgba(0, 245, 255, 0.5);
 }
 
-.tab-button:hover:not(.active) {
-    color: #FFFFFF;
-    background: rgba(255, 255, 255, 0.05);
+/* =========================================
+   DATA TABLES
+   ========================================= */
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.875rem;
+}
+
+.data-table thead tr {
+    border-bottom: 1px solid rgba(0, 245, 255, 0.15);
+}
+
+.data-table th {
+    text-align: left;
+    padding: 0.85rem 1rem;
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: rgba(0, 245, 255, 0.6);
+    white-space: nowrap;
+}
+
+.data-table td {
+    padding: 0.85rem 1rem;
+    color: rgba(200, 200, 255, 0.7);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+    vertical-align: middle;
+}
+
+.data-table tbody tr {
+    transition: background 0.2s ease;
+}
+
+.data-table tbody tr:hover {
+    background: rgba(0, 245, 255, 0.03);
+}
+
+/* =========================================
+   FORM (Owner add/edit lot dialog)
+   ========================================= */
+/* .form-group, .form-input, .form-label are defined in Dashboard.css/Auth.css */
+/* Extend for Owner dialog textarea */
+textarea.form-input {
+    resize: vertical;
+    min-height: 80px;
+}
+
+/* =========================================
+   OVERVIEW BOXES (Admin revenue, avg)
+   ========================================= */
+.overview-box-cyan {
+    background: rgba(0, 245, 255, 0.06);
+    padding: 1.5rem;
+    border-radius: 12px;
+    border: 1px solid rgba(0, 245, 255, 0.2);
+}
+
+.overview-box-green {
+    background: rgba(0, 255, 157, 0.06);
+    padding: 1.5rem;
+    border-radius: 12px;
+    border: 1px solid rgba(0, 255, 157, 0.2);
+}
+
+.overview-label {
+    font-size: 0.8rem;
+    color: rgba(200, 200, 255, 0.45);
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+}
+
+.overview-value-cyan {
+    font-size: 2rem;
+    font-weight: 800;
+    color: #00F5FF;
+    text-shadow: 0 0 16px rgba(0, 245, 255, 0.5);
+}
+
+.overview-value-green {
+    font-size: 2rem;
+    font-weight: 800;
+    color: #00FF9D;
+    text-shadow: 0 0 16px rgba(0, 255, 157, 0.4);
+}
+
+/* =========================================
+   RESPONSIVE
+   ========================================= */
+@media (max-width: 768px) {
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .data-table {
+        font-size: 0.78rem;
+    }
+
+    .data-table th,
+    .data-table td {
+        padding: 0.65rem 0.75rem;
+    }
+
+    .tab-button {
+        padding: 0.65rem 1rem;
+        font-size: 0.8rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .stats-grid {
+        grid-template-columns: 1fr;
+    }
 }
